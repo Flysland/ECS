@@ -13,21 +13,9 @@ int main()
 {
     ecs::World world = ecs::World();
 
-    ecs::Entity entity = world.createEntity();
-
-    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
-
-    world.destroyEntity(entity);
-
-    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
-
-    entity = world.createEntity();
-
-    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
-
-    world.destroyEntity(entity);
-
-    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
-
+    for (ecs::u64 i = 0; i < 100'000'000; ++i) {
+        ecs::Entity entity = world.createEntity();
+        world.addComponent<int>(entity);
+    }
     return 0;
 }

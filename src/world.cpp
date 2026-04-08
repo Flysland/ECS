@@ -12,6 +12,7 @@ namespace ecs
     void World::clear()
     {
         _entity_manager.clear();
+        _component_managers.clear();
     }
 
     Entity World::createEntity()
