@@ -16,7 +16,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DARC_DEBUG -O0 -g")
 
 add_library(ecs STATIC
-	src/main.cpp
+	src/world.cpp
+	src/entity/entity.cpp
+	src/entity/manager.cpp
 )
 
 target_include_directories(ecs

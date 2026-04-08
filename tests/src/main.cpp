@@ -7,8 +7,27 @@
 
 #include <iostream>
 
+#include "ecs.hpp"
+
 int main()
 {
-    std::cout << "Hello from tests" << std::endl;
+    ecs::World world = ecs::World();
+
+    ecs::Entity entity = world.createEntity();
+
+    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
+
+    world.destroyEntity(entity);
+
+    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
+
+    entity = world.createEntity();
+
+    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
+
+    world.destroyEntity(entity);
+
+    std::cout << "Is alive: " << world.isEntityAlive(entity) << std::endl;
+
     return 0;
 }
