@@ -24,6 +24,7 @@ namespace ecs
             void lock();
             void unlock();
             u64 size() const;
+            Component<T> &get(const Entity &entity);
 
         private:
             Components<T> _components;

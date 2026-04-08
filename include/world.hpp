@@ -37,6 +37,10 @@ namespace ecs
             template<typename T>
             bool containsComponent(const Entity &entity);
 
+            template<typename ... Ts, typename F>
+                requires std::is_invocable_r_v<void, F, Ts &...>
+            void edit(const Entity &entity, F &&lambda);
+
         private:
             EntityManager _entity_manager;
             ComponentManagers _component_managers;

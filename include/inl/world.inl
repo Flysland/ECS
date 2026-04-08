@@ -5,6 +5,9 @@
 //
 ////////////////////////
 
+#include <functional>
+#include <iostream>
+
 #include "world.hpp"
 
 namespace ecs
@@ -39,6 +42,33 @@ namespace ecs
             return false;
 
         return getComponentManager<T>().contains(entity);
+    }
+
+    template<typename ... Ts, typename F>
+        requires std::is_invocable_r_v<void, F, Ts &...>
+    void World::edit(const Entity &entity, F &&lambda)
+    {
+        if (!isEntityAlive(entity))
+            return;
+
+        auto managers = std::tuple<ComponentManager<Ts> &...>{ getComponentManager<Ts>()... };
+        auto components = std::apply([&entity](auto &... manager) {
+            return std::forward_as_tuple(manager.get(entity)...);
+        }, managers);
+
+        _entity_manager.lock();
+        std::apply([](auto &... manager) {
+            (manager.lock(), ...);
+        }, managers);
+
+        std::apply([&lambda](auto &... component) {
+            std::invoke(lambda, component...);
+        }, components);
+
+        _entity_manager.unlock();
+        std::apply([](auto &... manager) {
+            (manager.unlock(), ...);
+        }, managers);
     }
 
     template<typename T>

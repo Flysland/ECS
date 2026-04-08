@@ -5,6 +5,9 @@
 //
 ////////////////////////
 
+#include <cassert>
+#include <iostream>
+
 #include "component/manager.hpp"
 
 namespace ecs
@@ -68,6 +71,13 @@ namespace ecs
     u64 ComponentManager<T>::size() const
     {
         return _components.size();
+    }
+
+    template<typename T>
+    Component<T> &ComponentManager<T>::get(const Entity &entity)
+    {
+        assert(contains(entity));
+        return _components[_sparse[entity.id()]];
     }
 
     template<typename T>
