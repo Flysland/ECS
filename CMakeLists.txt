@@ -9,11 +9,13 @@ cmake_minimum_required(VERSION 3.28)
 project(ECS LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DARC_DEBUG -O0 -g")
 
-add_executable(ecs
+add_library(ecs STATIC
 	src/main.cpp
 )
 
@@ -22,6 +24,8 @@ target_include_directories(ecs
 )
 
 target_compile_features(ecs PUBLIC cxx_std_23)
+
+add_subdirectory(tests)
 
 if (MSVC)
 	target_compile_options(ecs PRIVATE /W4 /permissive-)
