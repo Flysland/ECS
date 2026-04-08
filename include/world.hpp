@@ -14,6 +14,7 @@
 #include "entity/entity.hpp"
 #include "entity/manager.hpp"
 #include "component/manager.hpp"
+#include "thread/pool.hpp"
 
 namespace ecs
 {
@@ -41,9 +42,14 @@ namespace ecs
                 requires std::is_invocable_r_v<void, F, Ts &...>
             void edit(const Entity &entity, F &&lambda);
 
+            template<typename ... Ts, typename F>
+                requires std::is_invocable_r_v<void, F, Ts &...>
+            void view(F &&lambda);
+
         private:
             EntityManager _entity_manager;
             ComponentManagers _component_managers;
+            ThreadPool _pool;
 
             template<typename T>
             void registerComponent();

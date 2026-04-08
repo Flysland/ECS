@@ -19,6 +19,8 @@ add_library(ecs STATIC
 	src/world.cpp
 	src/entity/entity.cpp
 	src/entity/manager.cpp
+	src/thread/pool.cpp
+	src/thread/jobs.cpp
 )
 
 target_include_directories(ecs

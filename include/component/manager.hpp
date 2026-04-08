@@ -17,6 +17,8 @@ namespace ecs
     template<typename T>
     class ComponentManager final : public IComponentManager
     {
+        friend class World;
+
         public:
             bool contains(const Entity &entity) const;
             void add(const Entity &entity);
